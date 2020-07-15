@@ -1,3 +1,5 @@
+package com.zhanghui.vue;
+
 //龟兔赛跑
 public class Race implements Runnable {
     //胜利者
