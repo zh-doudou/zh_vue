@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>模板</title>
+
+
+</head>
+<body>
+<div id="app">
+    <!--
+    v-model：双向绑定
+    -->
+    <input type="text" v-model="msg"> <input type="button" value="添加到记事本" @click="addmsg">
+    <br>
+    <ui>
+        <li v-for="u,index in massage">
+            {{index+1}} {{ u }} <a href="javascript:;" @click="del(index)">删除</a>
+        </li>
+    </ui>
+    <br>
+    <span>总数量:{{ massage.length }}</span>
+
+
+    <input type="button" v-show="massage.length!=0" value="删除所有" @click="delall">
+
+</div>
+<!--引入vue依赖-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //创建vue对象
+    const vue = new Vue({
+        el: "#app",//用来给vue实例定义一个作用范围  element id选择器
+        //用来给Vue实例定义一些相关数据
+        data: {
+            massage: ["aaa", "bbb"],
+            msg: ""
+        },
+        methods: {
+            //添加记事本事件
+            addmsg() {
+                //集合中添加这个信息
+                this.massage.push(this.msg);
+                //清空输入框内容
+                this.msg = "";
+            },
+            //单个删除事件
+            del(index) {
+                this.massage.splice(index, 1) //删除的下标  删除几个
+            },
+            //删除所有事件
+            delall() {
+                this.massage = [];
+            }
+        }
+    });
+</script>
+</body>
+</html>

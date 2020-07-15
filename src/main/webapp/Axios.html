@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Axios</title>
+</head>
+<body>
+<div id="app">
+    <!--
+    v-model：数据双向绑定
+    @click：点击事件
+    hr:分割线
+    -->
+    <input type="text" v-model="writer" @keyup.delete="delText" @keyup.enter="queryByCity"> <input type="button"
+                                                                                                   value="搜索"
+                                                                                                   @click="queryByCity">
+    <br>
+    <span v-for="city in hostCity">
+        <a href="" @click.prevent="queryByCitys(city)">{{ city }}</a>&nbsp;
+    </span>
+
+    <hr>
+    <span v-show="isShow">{{ writer}},今天天气是:{{ massage }}</span>
+
+</div>
+<!--引入vue依赖-->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //创建vue对象
+    const vue = new Vue({
+        el: "#app",//用来给vue实例定义一个作用范围  element id选择器
+        //用来给Vue实例定义一些相关数据
+        data: {
+            writer: "",//双向绑定值的存储
+            hostCity: ["北京", "上海", "河北", "河南"],
+            massage: "",
+            isShow: false
+        },
+        methods: {
+            //查询天气展示
+            queryByCity() {
+                console.log(this.writer);
+                let _this = this;
+                //发送请求
+                axios.get("http://localhost:1234/yxAdmin/queryWeatherByCity?name=" + this.writer).then(function (response) {
+                    console.log(response.data.name);
+                    _this.massage = response.data.name;
+                    _this.isShow = true
+                }).catch(function (error) {
+                    console.log(error);
+                })
+
+            },
+            //删除隐藏下面数据
+            delText() {
+                this.isShow = false;
+            },
+            queryByCitys(city) {
+                this.writer = city;
+                this.queryByCity();//函数中调用函数
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue第一个入门案例</title>
+
+
+</head>
+<body>
+<div id="app">
+    <input type="button" value="-" @click="editCount">
+    <span>{{ msg }}</span>
+    <input type="button" value="+" @click="addCount">
+
+</div>
+<!--引入vue依赖-->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    //创建vue对象
+    const vue = new Vue({
+        el: "#app",//用来给vue实例定义一个作用范围  element id选择器
+        //用来给Vue实例定义一些相关数据
+        data: {
+            msg: 1,
+        },
+        methods: {
+            addCount() {
+                this.msg++;
+            },
+            editCount() {
+                if (this.msg > 0) {
+                    this.msg--;
+                }
+                alert("别tm减了")
+            }
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <!--引入bootstrap中css样式-->
+    <link rel="stylesheet" href="./bootvue/css/bootstrap.min.css ">
+</head>
+<body>
+<!--导航条-->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">用户管理</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">欢迎用户：</a></li>
+            </ul>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div id="app">
+    <!--中心布局-->
+    <div class="container-fluid">
+        <!--搜索框-->
+        <div class="row">
+            <div class=" col-md-8 col-md-offset-1">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="searchName">姓名</label>
+                        <input type="text" class="form-control" id="searchName" placeholder="输入查询的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label for="searchStauts">状态</label>
+                        <input type="email" class="form-control" id="searchStauts" placeholder="查询的状态">
+                    </div>
+                    <button type="submit" class="btn btn-info">搜索</button>
+                </form>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px">
+            <!--用户列表展示-->
+            <div class="col-md-8">
+
+                <table class="table table-hover">
+                    <tr>
+                        <td>id</td>
+                        <td>姓名</td>
+                        <td>密码</td>
+                        <td>状态</td>
+                        <td>操作</td>
+                    </tr>
+                    <tbody>
+                    <tr v-for="user in users" :key="user.id">
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.password }}</td>
+                        <td>{{ user.status }}</td>
+                        <td>
+                            <button class="btn btn-danger" @click="delById( user.id)">删除</button>&nbsp;&nbsp;<button
+                                class="btn bg-primary" @click="findOneAdmin(user.id)">修改
+                        </button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            <!--表单添加-->
+            <div class="col-md-4">
+                <form>
+                    <div class="form-group">
+                        <label for="userName">姓名</label>
+                        <input type="email" class="form-control" id="username" placeholder="请输入姓名"
+                               v-model="yxAdmin.username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" class="form-control" id="password" placeholder="请输入密码"
+                               v-model="yxAdmin.password">
+                    </div>
+                    <div class="form-group">
+                        <label for="stauts">状态</label>
+                        <input type="text" class="form-control" id="stauts" placeholder="输入状态" v-model="yxAdmin.status">
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> Check me out
+                        </label>
+                    </div>
+                    <button type="button" class="btn btn-success" @click="insert">提交</button>
+                    <button type="reset" class="btn btn-info">重置</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!--引入vuejs-->
+<script src="./bootvue/js/vue.js"></script>
+<!--引入axios-->
+<script src="./bootvue/js/axios.min.js"></script>
+
+<script>
+    const app = new Vue({
+        el: "#app",
+        data: {
+            users: [],
+            yxAdmin: {}//数据用来双向绑定
+        },
+        methods: {
+            insert() {
+                let _this = this
+                console.log(this.yxAdmin);
+                axios.post("http://localhost:1234/yxAdmin/insert", this.yxAdmin).then(function (response) {
+                    if (response.data.success) {
+                        //更新页面列表数据
+                        _this.finAll()
+                        //清空上一次保存用户的信息
+                        _this.yxAdmin = ""
+                    } else {
+                        alert("添加失败")
+                    }
+                    console.log(response.data);
+                }).catch(function (error) {
+                    console.log(error);
+                })
+            },
+            //查询用户信息函数
+            finAll() {
+                let _this = this
+                axios.get("http://localhost:1234/yxAdmin/selectAll").then(function (response) {
+                    _this.users = response.data
+                    console.log(response.data);
+                }).catch(function (eror) {
+                    //发送请求
+                    console.log(eror);
+                })
+            },
+            //根据id删除
+            delById(idd) {
+                let _this = this
+                axios.get("http://localhost:1234/yxAdmin/delById?id=" + idd).then(function (response) {
+                    _this.finAll()
+                }).catch(function (error) {
+                })
+                alert(idd)
+            },
+            //根据id查询
+            findOneAdmin(id) {
+                let _this = this
+                axios.get("http://localhost:1234/yxAdmin/findOneAdmin?id=" + id).then(function (response) {
+                    _this.yxAdmin = response.data
+                    console.log(response.data);
+                })
+            }
+        },
+        //生命周期函数  发送查询所有
+        created() {
+            this.finAll();
+        }
+    })
+</script>
+</body>
+</html>
