@@ -11,6 +11,7 @@ public class TestAa {
         System.out.println("aaaaaaaaaaaaaaaaaaaaa");
         System.out.println("today");
         System.out.println("hei");
+        System.out.println("李傻子");
     }
 
     public static int add(int a, int b) {
