@@ -12,6 +12,7 @@ public class TestAa {
         System.out.println("today");
         System.out.println("hei");
         System.out.println("李傻子");
+        System.out.println("李小儿傻");
     }
 
     public static int add(int a, int b) {
