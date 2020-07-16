@@ -12,6 +12,8 @@ public class TestAa {
         System.out.println("today");
         System.out.println("hei");
         System.out.println("yo");
+        System.out.println("李傻子");
+        System.out.println("李小儿傻");
         System.out.println("this");
     }
 
