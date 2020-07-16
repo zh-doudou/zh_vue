@@ -8,7 +8,7 @@ public class TestAa {
         System.out.println("今天天气不错" + add);
         System.out.println("什么啊");
         System.out.println("还行");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaa");
     }
 
     public static int add(int a, int b) {
