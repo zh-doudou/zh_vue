@@ -9,6 +9,8 @@ public class TestAa {
         System.out.println("什么啊");
         System.out.println("还行");
         System.out.println("aaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("today");
+        System.out.println("hei");
     }
 
     public static int add(int a, int b) {
