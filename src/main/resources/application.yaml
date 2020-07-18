@@ -26,6 +26,17 @@ spring:
   # 禁用模板缓存 确保这个文件不会发布到生产环境，否则生产环境里的应用程序就无法享受模板缓 存带来的性能提升
   thymeleaf:
     cache: false
+  #
+  rabbitmq:                #rabbitmq配置
+    host: 192.168.32.163   #配置ip地址
+    port: 5672             #配置端口号
+    username: zhang          #用户名
+    password: 123          #密码
+    virtual-host: /ems     #指定的虚拟主机
+
+
+
+
 #nybatis配置
 mybatis:
   type-aliases-package: com.zhanghui.yx.entity              #指定实体类的位置

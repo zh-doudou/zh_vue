@@ -160,6 +160,17 @@
             <version>1.2.58</version>
             <scope>compile</scope>
         </dependency>
+        <!--消息队列-->
+        <!--<dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.2.0</version>
+        </dependency>-->
+        <!--springboot整合消息队列-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
     </dependencies>
 
