@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhanghui.vue.dao.EmploymentDao">
+
+    <resultMap type="com.zhanghui.vue.entity.Employment" id="EmploymentMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="slary" column="slary" jdbcType="VARCHAR"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="address" column="address" jdbcType="VARCHAR"/>
+        <result property="highlights" column="Highlights" jdbcType="VARCHAR"/>
+        <result property="education" column="education" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="EmploymentMap">
+        select
+          id, name, slary, account, address, Highlights, education
+        from yingx.employment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="EmploymentMap">
+        select
+          id, name, slary, account, address, Highlights, education
+        from yingx.employment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="EmploymentMap">
+        select
+          id, name, slary, account, address, Highlights, education
+        from yingx.employment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="slary != null and slary != ''">
+                and slary = #{slary}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="address != null and address != ''">
+                and address = #{address}
+            </if>
+            <if test="highlights != null and highlights != ''">
+                and Highlights = #{highlights}
+            </if>
+            <if test="education != null and education != ''">
+                and education = #{education}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into yingx.employment(name, slary, account, address, Highlights, education)
+        values (#{name}, #{slary}, #{account}, #{address}, #{highlights}, #{education})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update yingx.employment
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="slary != null and slary != ''">
+                slary = #{slary},
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="highlights != null and highlights != ''">
+                Highlights = #{highlights},
+            </if>
+            <if test="education != null and education != ''">
+                education = #{education},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from yingx.employment where id = #{id}
+    </delete>
+
+</mapper>
